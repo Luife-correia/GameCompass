@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>GameCompass - Recomendações</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 20px; color: #333; }
+        .container { max-width: 900px; margin: 0 auto; }
+        .back-link { display: inline-block; margin-bottom: 20px; color: #2563eb; text-decoration: none; font-weight: bold; }
+        .back-link:hover { text-decoration: underline; }
+        .base-card { background: #1e293b; color: #fff; border-radius: 8px; padding: 25px; margin-bottom: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .base-card h2 { margin-top: 0; color: #38bdf8; }
+        .badge { display: inline-block; background: #334155; color: #38bdf8; padding: 3px 8px; border-radius: 4px; font-size: 0.8em; margin-right: 5px; }
+        h3 { color: #1e293b; border-bottom: 2px solid #cbd5e1; padding-bottom: 8px; }
+        .rec-list { display: flex; flex-direction: column; gap: 15px; }
+        .rec-card { background: #fff; border-radius: 8px; padding: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; }
+        .rec-info h4 { margin: 0 0 5px 0; color: #2563eb; font-size: 1.2em; }
+        .rec-info p { margin: 5px 0 0 0; color: #555; font-size: 0.9em; }
+        .score { background: #dbeafe; color: #1e40af; padding: 8px 15px; border-radius: 20px; font-weight: bold; font-size: 0.9em; white-space: nowrap; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a class="back-link" href="/jogos">&larr; Voltar para o Catálogo</a>
+
+        <div class="base-card" th:if="${jogoBase != null}">
+            <h2 th:text="${jogoBase.nome}">Jogo Base</h2>
+            <p th:text="'Desenvolvedor: ' + ${jogoBase.desenvolvedor}">Desenvolvedor</p>
+            <div>
+                <span class="badge" th:each="g : ${jogoBase.generos}" th:text="${g}">Gênero</span>
+            </div>
+            <p th:text="${jogoBase.descricao}" style="margin-top: 15px;">Descrição...</p>
+        </div>
+
+        <h3>Jogos Recomendados por Similaridade</h3>
+
+        <div class="rec-list" th:if="${recomendacoes != null and !recomendacoes.isEmpty()}">
+            <div class="rec-card" th:each="rec : ${recomendacoes}">
+                <div class="rec-info">
+                    <h4 th:text="${rec.jogo.nome}">Nome do Jogo</h4>
+                    <p th:text="'Desenvolvedor: ' + ${rec.jogo.desenvolvedor} + ' | Gêneros: ' + ${#strings.arrayJoin(rec.jogo.generos, ', ')}">Detalhes</p>
+                    <p th:text="${rec.jogo.descricao}">Descrição</p>
+                </div>
+                <div class="score" th:text="'Pontuação: ' + ${rec.pontuacao}">Pontuação: 10</div>
+            </div>
+        </div>
+
+        <p th:if="${recomendacoes == null or recomendacoes.isEmpty()}">Nenhuma recomendação encontrada para este jogo.</p>
+    </div>
+</body>
+</html>

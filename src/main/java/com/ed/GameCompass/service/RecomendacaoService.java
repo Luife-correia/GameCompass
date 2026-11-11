@@ -16,26 +16,26 @@ import java.util.List;
 public class RecomendacaoService {
 
     private final List<Jogo> catalogo = List.of(
-            new Jogo("The Witcher 3", "witcher-3.jpg", "RPG de mundo aberto com uma grande aventura.", LocalDate.of(2015, 5, 18), new String[]{"RPG", "Acao", "Aventura"}, "CD Projekt Red"),
-            new Jogo("Cyberpunk 2077", "cyberpunk-2077.jpg", "RPG futurista de mundo aberto.", LocalDate.of(2020, 12, 10), new String[]{"RPG", "Acao", "Mundo Aberto"}, "CD Projekt Red"),
-            new Jogo("Elden Ring", "elden-ring.jpg", "RPG de acao em um mundo fantastico.", LocalDate.of(2022, 2, 25), new String[]{"RPG", "Acao", "Fantasia"}, "FromSoftware"),
-            new Jogo("Dark Souls III", "dark-souls-3.jpg", "RPG desafiador em um universo sombrio.", LocalDate.of(2016, 4, 12), new String[]{"RPG", "Acao", "Fantasia"}, "FromSoftware"),
-            new Jogo("Sekiro: Shadows Die Twice", "sekiro.jpg", "Acao e aventura com combate baseado em precisao.", LocalDate.of(2019, 3, 22), new String[]{"Acao", "Aventura", "Fantasia"}, "FromSoftware"),
-            new Jogo("God of War", "god-of-war.jpg", "Aventura epica inspirada na mitologia nordica.", LocalDate.of(2022, 1, 14), new String[]{"Acao", "Aventura", "Fantasia"}, "Santa Monica Studio"),
-            new Jogo("Horizon Zero Dawn", "horizon-zero-dawn.jpg", "Aventura em um mundo aberto dominado por maquinas.", LocalDate.of(2020, 8, 7), new String[]{"Acao", "Aventura", "Mundo Aberto"}, "Guerrilla Games"),
-            new Jogo("The Last of Us Part I", "the-last-of-us.jpg", "Aventura narrativa em um mundo pos-apocaliptico.", LocalDate.of(2023, 3, 28), new String[]{"Acao", "Aventura", "Drama"}, "Naughty Dog"),
-            new Jogo("Uncharted 4", "uncharted-4.jpg", "Aventura cinematografica de exploracao e misterio.", LocalDate.of(2022, 10, 19), new String[]{"Acao", "Aventura", "Exploracao"}, "Naughty Dog"),
-            new Jogo("Red Dead Redemption 2", "red-dead-redemption-2.jpg", "Aventura em mundo aberto no velho oeste.", LocalDate.of(2019, 12, 5), new String[]{"Acao", "Aventura", "Mundo Aberto"}, "Rockstar Games"),
-            new Jogo("Grand Theft Auto V", "gta-5.jpg", "Acao em mundo aberto com diferentes protagonistas.", LocalDate.of(2015, 4, 14), new String[]{"Acao", "Mundo Aberto", "Crime"}, "Rockstar Games"),
-            new Jogo("Assassin's Creed Odyssey", "assassins-creed-odyssey.jpg", "RPG de acao ambientado na Grecia Antiga.", LocalDate.of(2018, 10, 5), new String[]{"RPG", "Acao", "Mundo Aberto"}, "Ubisoft"),
-            new Jogo("Far Cry 6", "far-cry-6.jpg", "Acao em primeira pessoa em uma ilha sob ditadura.", LocalDate.of(2022, 5, 11), new String[]{"Acao", "Tiro", "Mundo Aberto"}, "Ubisoft"),
-            new Jogo("Resident Evil 4", "resident-evil-4.jpg", "Terror e sobrevivencia contra uma ameaca biologica.", LocalDate.of(2023, 3, 24), new String[]{"Terror", "Acao", "Sobrevivencia"}, "Capcom"),
-            new Jogo("Monster Hunter: World", "monster-hunter-world.jpg", "RPG de acao focado na caca de monstros.", LocalDate.of(2018, 8, 9), new String[]{"RPG", "Acao", "Sobrevivencia"}, "Capcom"),
-            new Jogo("Minecraft", "minecraft.jpg", "Construcao e sobrevivencia em um mundo de blocos.", LocalDate.of(2011, 11, 18), new String[]{"Sobrevivencia", "Aventura", "Mundo Aberto"}, "Mojang Studios"),
-            new Jogo("Stardew Valley", "stardew-valley.jpg", "Simulacao de fazenda com exploracao e relacionamentos.", LocalDate.of(2016, 2, 26), new String[]{"Simulacao", "RPG", "Aventura"}, "ConcernedApe"),
-            new Jogo("Hades", "hades.jpg", "Roguelike de acao inspirado na mitologia grega.", LocalDate.of(2020, 9, 17), new String[]{"RPG", "Acao", "Roguelike"}, "Supergiant Games"),
-            new Jogo("Hollow Knight", "hollow-knight.jpg", "Aventura de acao em um reino subterraneo.", LocalDate.of(2017, 2, 24), new String[]{"Acao", "Aventura", "Metroidvania"}, "Team Cherry"),
-            new Jogo("Celeste", "celeste.jpg", "Plataforma e aventura sobre superar desafios.", LocalDate.of(2018, 1, 25), new String[]{"Plataforma", "Aventura", "Indie"}, "Maddy Makes Games")
+            new Jogo("The Witcher 3", "https://cdn.cloudflare.steamstatic.com/steam/apps/292030/library_600x900.jpg", "RPG de mundo aberto com uma grande aventura.", LocalDate.of(2015, 5, 18), new String[]{"RPG", "Acao", "Aventura"}, "CD Projekt Red"),
+            new Jogo("Cyberpunk 2077", "https://cdn.cloudflare.steamstatic.com/steam/apps/1091500/library_600x900.jpg", "RPG futurista de mundo aberto.", LocalDate.of(2020, 12, 10), new String[]{"RPG", "Acao", "Mundo Aberto"}, "CD Projekt Red"),
+            new Jogo("Elden Ring", "https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/library_600x900.jpg", "RPG de acao em um mundo fantastico.", LocalDate.of(2022, 2, 25), new String[]{"RPG", "Acao", "Fantasia"}, "FromSoftware"),
+            new Jogo("Dark Souls III", "https://cdn.cloudflare.steamstatic.com/steam/apps/374320/library_600x900.jpg", "RPG desafiador em um universo sombrio.", LocalDate.of(2016, 4, 12), new String[]{"RPG", "Acao", "Fantasia"}, "FromSoftware"),
+            new Jogo("Sekiro: Shadows Die Twice", "https://cdn.cloudflare.steamstatic.com/steam/apps/814380/library_600x900.jpg", "Acao e aventura com combate baseado em precisao.", LocalDate.of(2019, 3, 22), new String[]{"Acao", "Aventura", "Fantasia"}, "FromSoftware"),
+            new Jogo("God of War", "https://cdn.cloudflare.steamstatic.com/steam/apps/1593500/library_600x900.jpg", "Aventura epica inspirada na mitologia nordica.", LocalDate.of(2022, 1, 14), new String[]{"Acao", "Aventura", "Fantasia"}, "Santa Monica Studio"),
+            new Jogo("Horizon Zero Dawn", "https://cdn.cloudflare.steamstatic.com/steam/apps/1151640/library_600x900.jpg", "Aventura em um mundo aberto dominado por maquinas.", LocalDate.of(2020, 8, 7), new String[]{"Acao", "Aventura", "Mundo Aberto"}, "Guerrilla Games"),
+            new Jogo("The Last of Us Part I", "https://cdn.cloudflare.steamstatic.com/steam/apps/1888930/library_600x900.jpg", "Aventura narrativa em um mundo pos-apocaliptico.", LocalDate.of(2023, 3, 28), new String[]{"Acao", "Aventura", "Drama"}, "Naughty Dog"),
+            new Jogo("Uncharted 4", "https://cdn.cloudflare.steamstatic.com/steam/apps/1659420/library_600x900.jpg", "Aventura cinematografica de exploracao e misterio.", LocalDate.of(2022, 10, 19), new String[]{"Acao", "Aventura", "Exploracao"}, "Naughty Dog"),
+            new Jogo("Red Dead Redemption 2", "https://cdn.cloudflare.steamstatic.com/steam/apps/1174180/library_600x900.jpg", "Aventura em mundo aberto no velho oeste.", LocalDate.of(2019, 12, 5), new String[]{"Acao", "Aventura", "Mundo Aberto"}, "Rockstar Games"),
+            new Jogo("Grand Theft Auto V", "https://cdn.cloudflare.steamstatic.com/steam/apps/271590/library_600x900.jpg", "Acao em mundo aberto com diferentes protagonistas.", LocalDate.of(2015, 4, 14), new String[]{"Acao", "Mundo Aberto", "Crime"}, "Rockstar Games"),
+            new Jogo("Assassin's Creed Odyssey", "https://cdn.cloudflare.steamstatic.com/steam/apps/812140/library_600x900.jpg", "RPG de acao ambientado na Grecia Antiga.", LocalDate.of(2018, 10, 5), new String[]{"RPG", "Acao", "Mundo Aberto"}, "Ubisoft"),
+            new Jogo("Far Cry 6", "https://cdn.cloudflare.steamstatic.com/steam/apps/2369390/library_600x900.jpg", "Acao em primeira pessoa em uma ilha sob ditadura.", LocalDate.of(2022, 5, 11), new String[]{"Acao", "Tiro", "Mundo Aberto"}, "Ubisoft"),
+            new Jogo("Resident Evil 4", "https://cdn.cloudflare.steamstatic.com/steam/apps/2050650/library_600x900.jpg", "Terror e sobrevivencia contra uma ameaca biologica.", LocalDate.of(2023, 3, 24), new String[]{"Terror", "Acao", "Sobrevivencia"}, "Capcom"),
+            new Jogo("Monster Hunter: World", "https://cdn.cloudflare.steamstatic.com/steam/apps/582010/library_600x900.jpg", "RPG de acao focado na caca de monstros.", LocalDate.of(2018, 8, 9), new String[]{"RPG", "Acao", "Sobrevivencia"}, "Capcom"),
+            new Jogo("Minecraft", "https://images.unsplash.com/photo-1627856013091-feddeecd4815?w=600&auto=format&fit=crop&q=80", "Construcao e sobrevivencia em um mundo de blocos.", LocalDate.of(2011, 11, 18), new String[]{"Sobrevivencia", "Aventura", "Mundo Aberto"}, "Mojang Studios"),
+            new Jogo("Stardew Valley", "https://cdn.cloudflare.steamstatic.com/steam/apps/413150/library_600x900.jpg", "Simulacao de fazenda com exploracao e relacionamentos.", LocalDate.of(2016, 2, 26), new String[]{"Simulacao", "RPG", "Aventura"}, "ConcernedApe"),
+            new Jogo("Hades", "https://cdn.cloudflare.steamstatic.com/steam/apps/1145360/library_600x900.jpg", "Roguelike de acao inspirado na mitologia grega.", LocalDate.of(2020, 9, 17), new String[]{"RPG", "Acao", "Roguelike"}, "Supergiant Games"),
+            new Jogo("Hollow Knight", "https://cdn.cloudflare.steamstatic.com/steam/apps/367520/library_600x900.jpg", "Aventura de acao em um reino subterraneo.", LocalDate.of(2017, 2, 24), new String[]{"Acao", "Aventura", "Metroidvania"}, "Team Cherry"),
+            new Jogo("Celeste", "https://cdn.cloudflare.steamstatic.com/steam/apps/504230/library_600x900.jpg", "Plataforma e aventura sobre superar desafios.", LocalDate.of(2018, 1, 25), new String[]{"Plataforma", "Aventura", "Indie"}, "Maddy Makes Games")
     );
 
     private final Grafo<Jogo> grafo = new Grafo<>();
@@ -96,7 +96,8 @@ public class RecomendacaoService {
         // As recomendações agora vêm das arestas que saem do jogo base.
         for (Aresta<Jogo> aresta : verticeBase.getArestasSaida()) {
             Jogo jogoRecomendado = aresta.getFim().getDado();
-            recomendacoes.add(new Recomendacao(jogoRecomendado, aresta.getPeso().intValue()));
+            int indiceRecomendado = catalogo.indexOf(jogoRecomendado);
+            recomendacoes.add(new Recomendacao(jogoRecomendado, aresta.getPeso().intValue(), indiceRecomendado));
         }
 
         recomendacoes.sort(

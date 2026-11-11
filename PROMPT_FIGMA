@@ -1,0 +1,189 @@
+# PROMPT PARA IA DO FIGMA / FERRAMENTA DE GERAÇÃO DE APRESENTAÇÃO (EXCALIDRAW STYLE)
+
+> **Instrução para a IA do Figma / Firstdraft / Gamma / v0:**
+> Crie uma apresentação de slides interativa e de altíssimo nível profissional, utilizando o estilo visual estético **Excalidraw** (traços estilo sketch/esboço, fontes manuscritas ou monospace, bordas levemente irregulares, sombras suaves com efeito de rascunho e paleta de cores misturando tons de escuro de terminal com pastéis amigáveis).
+> A apresentação deve conter **muitas animações fluidas**, transições suaves entre os slides, **controles interativos de navegação (botões "Voltar" e "Avançar")**, indicador de progresso animado e contador de slides ("Slide X / 08").
+>
+> **Foco da Apresentação:** 90% dedicada à **Engenharia Back-end, Estrutura de Dados (Grafos em Java)** e arquitetura Spring Boot; 10% dedicada à comunicação com o Front-end e interface gerada por Agente de IA.
+> **Divisão dos Apresentadores:**
+> - **Luciano Junior:** Slides 01, 02, 03 e 04 (Introdução, Por que Spring Boot?, Arquitetura e Estrutura de Dados de Grafos).
+> - **Luiz Felipe:** Slides 05, 06, 07 e 08 (Algoritmo de Similaridade, Controller & Rotas, Comunicação com Front-end e Conclusão).
+
+---
+
+## ESTRUTURA DETALHADA DOS SLIDES
+
+### Slide 01: Capa & Apresentação da Equipe
+- **Apresentador:** Luciano Junior
+- **Visual:** Estilo Excalidraw, título desenhado à mão com ícones de controle de videogame e caixas de rascunho.
+- **Título:** `GameCompass: Plataforma de Recomendação Baseada em Grafos`
+- **Subtítulo:** *"Explorando Estruturas de Dados Avançadas e Engenharia Spring Boot"*
+- **Equipe de Desenvolvedores:**
+  - **Luciano Junior** (Arquitetura & Estrutura de Grafos)
+  - **Luiz Felipe** (Serviços, Lógica de Similaridade & Integração)
+- **Status:** Backend 100% | Grafos 100% | Front-end UI (IA Assisted) 100%
+
+---
+
+### Slide 02: Por que Spring Boot? (Justificativa Técnica)
+- **Apresentador:** Luciano Junior
+- **Visual:** Tabela comparativa e cartões em formato de rascunho.
+- **Pergunta Central:** *"Por que escolhemos Spring Boot para um projeto que poderia ser resolvido em Java Puro (Console)?"*
+- **Tabela Comparativa:**
+  | Critério | Java Puro (CLI / Console) | Spring Boot (Web Application) |
+  | :--- | :--- | :--- |
+  | **Interface de Acesso** | Entrada/Saída via console de texto. | Interface web interativa, visual e responsiva. |
+  | **Injeção de Dependências** | Instanciação manual via `new`. | Gerenciamento automático de Beans e escopos (`@Service`). |
+  | **Roteamento HTTP** | Inexistente. | Roteamento REST / MVC robusto (`@GetMapping`, `@PathVariable`). |
+  | **Ecossistema & Testes** | Limitado a bibliotecas padrão. | Suporte nativo a Thymeleaf, testes unitários e empacotamento JAR. |
+- **Dependências Chave (`pom.xml`):**
+  - `spring-boot-starter-web`: Para controle de rotas HTTP e API/MVC.
+  - `spring-boot-starter-thymeleaf`: Para renderização de templates dinâmicos no servidor.
+
+---
+
+### Slide 03: Arquitetura e o Fluxo de Requisições
+- **Apresentador:** Luciano Junior
+- **Visual:** Diagrama de fluxo animado no estilo Excalidraw.
+- **Como a Requisição Funciona:**
+  1. O usuário clica em um jogo no navegador.
+  2. Requisição `GET /jogos/{indice}/recomendacoes` atinge o `JogoController`.
+  3. O Controller aciona o `RecomendacaoService`, que consulta o `Grafo<Jogo>`.
+  4. O grafo retorna as arestas ponderadas (similaridade).
+  5. O serviço ordena as recomendações e devolve o modelo (`ModelAndView`) para o Thymeleaf renderizar a tela.
+
+---
+
+### Slide 04: O Núcleo do Back-end — A Estrutura de Grafos (`Grafo.java` & `Vertice.java`)
+- **Apresentador:** Luciano Junior
+- **Visual:** Bloco de código com destaque de sintaxe e diagramas de nós.
+- **Explicação:** Modelamos o catálogo de jogos como um **Grafo Não Direcionado e Ponderado**, onde cada jogo é um **Vértice** e a similaridade entre eles forma as **Arestas** com pesos numéricos.
+- **Código Fonte Principal (`Grafo.java`):**
+```java
+package com.ed.GameCompass.grafo;
+import java.util.ArrayList;
+
+public class Grafo<TIPO> {
+    private ArrayList<Vertice<TIPO>> vertices;
+    private ArrayList<Aresta<TIPO>> arestas;
+
+    public Grafo(){
+        this.vertices = new ArrayList<Vertice<TIPO>>();
+        this.arestas = new ArrayList<Aresta<TIPO>>();
+    }
+
+    public void adicionarVertice(TIPO dado){
+        Vertice<TIPO> novoVertice = new Vertice<TIPO>(dado);
+        this.vertices.add(novoVertice);
+    }
+
+    public void adicionarAresta (Double peso, TIPO dadoInicio, TIPO dadoFim) {
+        Vertice<TIPO> inicio = this.getVertice(dadoInicio);
+        Vertice<TIPO> fim = this.getVertice(dadoFim);
+        Aresta<TIPO> aresta = new Aresta<TIPO>(peso, inicio, fim);
+        inicio.adicionarArestaSaida(aresta);
+        fim.adicionarArestaEntrada(aresta);
+        this.arestas.add(aresta);
+    }
+}
+```
+
+---
+
+### Slide 05: O Algoritmo de Similaridade (`RecomendacaoService.java`)
+- **Apresentador:** Luiz Felipe
+- **Visual:** Bloco de código detalhando a regra de negócio matemática.
+- **Explicação:** Para cada gênero em comum entre dois jogos, soma-se `1` ponto. Se ambos forem da mesma desenvolvedora, soma-se um bônus de `3` pontos.
+- **Código Fonte Principal (`RecomendacaoService.java`):**
+```java
+@Service
+public class RecomendacaoService {
+    private final List<Jogo> catalogo = List.of(...);
+    private final Grafo<Jogo> grafo = new Grafo<>();
+
+    public int calcularSimilaridade(Jogo jogoBase, Jogo jogoCandidato) {
+        int pontuacao = 0;
+        for (int i = 0; i < jogoBase.getGeneros().length; i++) {
+            for (int j = 0; j < jogoCandidato.getGeneros().length; j++) {
+                if (jogoBase.getGeneros()[i].equals(jogoCandidato.getGeneros()[j])){
+                    pontuacao++;
+                    break;
+                }
+            }
+        }
+        if (jogoBase.getDesenvolvedor().equals(jogoCandidato.getDesenvolvedor())){
+            pontuacao += 3;
+        }
+        return pontuacao;
+    }
+
+    public List<Recomendacao> ordenarPorSimilaridade(Jogo jogoBase){
+        ArrayList<Recomendacao> recomendacoes = new ArrayList<>();
+        Vertice<Jogo> verticeBase = grafo.getVertice(jogoBase);
+        for (Aresta<Jogo> aresta : verticeBase.getArestasSaida()) {
+            Jogo jogoRecomendado = aresta.getFim().getDado();
+            int indiceRecomendado = catalogo.indexOf(jogoRecomendado);
+            recomendacoes.add(new Recomendacao(jogoRecomendado, aresta.getPeso().intValue(), indiceRecomendado));
+        }
+        recomendacoes.sort(Comparator.comparingInt(Recomendacao::getPontuacao).reversed());
+        return recomendacoes;
+    }
+}
+```
+
+---
+
+### Slide 06: Controlador MVC (`JogoController.java`)
+- **Apresentador:** Luiz Felipe
+- **Visual:** Bloco de código com destaque para as anotações `@Controller` e `@GetMapping`.
+- **Explicação:** O controller gerencia os endpoints da aplicação web, fazendo a ponte entre as requisições HTTP e os serviços de domínio.
+- **Código Fonte Principal (`JogoController.java`):**
+```java
+@Controller
+public class JogoController {
+    private final RecomendacaoService recomendacaoService;
+
+    public JogoController(RecomendacaoService recomendacaoService) {
+        this.recomendacaoService = recomendacaoService;
+    }
+
+    @GetMapping({"/", "/jogos"})
+    public String listarJogos(Model model) {
+        model.addAttribute("jogos", recomendacaoService.getCatalogo());
+        return "index";
+    }
+
+    @GetMapping("/jogos/{indice}/recomendacoes")
+    public String listarRecomendacoes(@PathVariable int indice, Model model) {
+        if (indice < 0 || indice >= recomendacaoService.getCatalogo().size()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Jogo nao encontrado");
+        }
+        Jogo jogoBase = recomendacaoService.getCatalogo().get(indice);
+        model.addAttribute("jogoBase", jogoBase);
+        model.addAttribute("recomendacoes", recomendacaoService.ordenarPorSimilaridade(jogoBase));
+        return "recomendacoes";
+    }
+}
+```
+
+---
+
+### Slide 07: Comunicação Front-end & O Papel da IA
+- **Apresentador:** Luiz Felipe
+- **Visual:** Infográfico conectando o back-end Java a um layout moderno.
+- **Como o Back-end conversa com o Front-end:**
+  - O Spring Boot preenche modelos (`Model`) com listas de objetos Java (`Jogo`, `Recomendacao`) e os injeta nos templates Thymeleaf.
+  - O front-end consome essas variáveis via tags nativas do Thymeleaf (`th:each`, `th:text`, `th:src`).
+- **Nota Especial sobre o Front-end:**
+  - A interface gráfica foi construída com o auxílio de um **Agente de Inteligência Artificial**, que analisou a estrutura das classes Java e gerou um design *Dark Mode* responsivo inspirado na Steam, garantindo excelência estética sem desviar da robustez da engenharia back-end.
+
+---
+
+### Slide 08: Conclusão & Encerramento
+- **Apresentadores:** Luciano Junior & Luiz Felipe
+- **Visual:** Tela de agradecimento estilo sketch com botões interativos `[ Reiniciar Apresentação ]`.
+- **Resumo:**
+  - Demonstração prática de como aplicar teoria de grafos em um sistema web real.
+  - Divisão eficiente de papéis e sinergia entre desenvolvimento humano e ferramentas de IA.
+- **Desenvolvedores:** Luciano Junior & Luiz Felipe
+- **Repositório:** GameCompass (Projeto Integrador / Estrutura de Dados)

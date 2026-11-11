@@ -3,10 +3,12 @@ package com.ed.GameCompass.model;
 public class Recomendacao {
     private Jogo jogo;
     private int pontuacao;
+    private int indice;
 
-    public Recomendacao(Jogo jogo, int pontuacao) {
+    public Recomendacao(Jogo jogo, int pontuacao, int indice) {
         this.jogo = jogo;
         this.pontuacao = pontuacao;
+        this.indice = indice;
     }
 
     public Jogo getJogo() {
@@ -23,6 +25,14 @@ public class Recomendacao {
 
     public void setPontuacao(int pontuacao) {
         this.pontuacao = pontuacao;
+    }
+
+    public int getIndice() {
+        return indice;
+    }
+
+    public void setIndice(int indice) {
+        this.indice = indice;
     }
 
 }

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>GameCompass — Detalhes e Recomendações</title>
+    <style>
+        :root {
+            --bg-obsidian: #0b0f19;
+            --bg-card: #131c31;
+            --bg-header: #0f172a;
+            --accent: #38bdf8;
+            --accent-glow: rgba(56, 189, 248, 0.25);
+            --text-main: #94a3b8;
+            --text-white: #f8fafc;
+            --border-color: rgba(255, 255, 255, 0.08);
+        }
+
+        * { box-sizing: border-box; }
+        body { font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif; background-color: var(--bg-obsidian); margin: 0; padding: 0; color: var(--text-main); }
+
+        header { background-color: var(--bg-header); padding: 18px 48px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 100; backdrop-filter: blur(12px); }
+        .logo-container { display: flex; align-items: center; text-decoration: none; }
+
+        .nav-links { display: flex; gap: 24px; align-items: center; font-size: 0.95em; font-weight: 500; }
+        .nav-links a { color: var(--text-main); text-decoration: none; transition: color 0.2s; }
+        .nav-links a:hover { color: var(--accent); }
+        .nav-badge { background: rgba(56, 189, 248, 0.1); color: var(--accent); padding: 6px 14px; border-radius: 20px; border: 1px solid rgba(56, 189, 248, 0.3); font-size: 0.85em; }
+
+        .container { max-width: 1200px; margin: 40px auto; padding: 0 24px; }
+        .back-link { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 30px; color: var(--accent); text-decoration: none; font-weight: 600; font-size: 1em; transition: color 0.2s; }
+        .back-link:hover { color: var(--text-white); }
+
+        .base-game-card { background: var(--bg-card); border-radius: 14px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.6); display: grid; grid-template-columns: 380px 1fr; border: 1px solid var(--border-color); margin-bottom: 60px; }
+        @media (max-width: 768px) { .base-game-card { grid-template-columns: 1fr; } }
+        .base-game-img { width: 100%; height: 100%; min-height: 450px; object-fit: cover; background: #0b0f19; }
+        .base-game-info { padding: 40px; display: flex; flex-direction: column; justify-content: center; }
+        .base-game-info h2 { margin: 0 0 12px 0; color: var(--text-white); font-size: 2.4em; font-weight: 800; }
+        .dev { font-size: 0.95em; color: #64748b; margin-bottom: 15px; font-weight: 500; }
+        .genres { margin-bottom: 24px; display: flex; flex-wrap: wrap; gap: 8px; }
+        .badge { background: rgba(56, 189, 248, 0.08); color: var(--accent); padding: 5px 12px; border-radius: 6px; font-size: 0.8em; border: 1px solid rgba(56, 189, 248, 0.2); font-weight: 500; }
+        .desc { font-size: 1.05em; color: var(--text-main); line-height: 1.7; margin-bottom: 24px; }
+        .launch-date { font-size: 0.9em; color: var(--accent); font-weight: 600; }
+
+        .section-title { color: var(--text-white); font-size: 1.6em; margin-bottom: 25px; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; display: flex; align-items: center; gap: 10px; font-weight: 700; }
+
+        /* Top 4 Recommendations grid showing just cover and name */
+        .rec-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 24px; margin-bottom: 50px; }
+        .rec-card { background: var(--bg-card); border-radius: 12px; overflow: hidden; text-decoration: none; color: inherit; box-shadow: 0 10px 25px rgba(0,0,0,0.4); display: flex; flex-direction: column; transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s, border-color 0.3s; border: 1px solid var(--border-color); }
+        .rec-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px var(--accent-glow); border-color: rgba(56, 189, 248, 0.4); }
+        .rec-img-container { width: 100%; height: 320px; background: #0b0f19; overflow: hidden; position: relative; }
+        .rec-img-container img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+        .rec-card:hover .rec-img-container img { transform: scale(1.06); }
+        .rec-content { padding: 18px; text-align: center; background: var(--bg-card); flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
+        .rec-content h4 { margin: 0 0 10px 0; color: var(--text-white); font-size: 1.15em; font-weight: 700; }
+        .similarity-badge { display: inline-block; background: rgba(56, 189, 248, 0.08); color: var(--accent); padding: 4px 10px; border-radius: 6px; font-size: 0.75em; border: 1px solid rgba(56, 189, 248, 0.2); font-weight: 500; }
+
+        footer { background-color: var(--bg-header); color: #64748b; text-align: center; padding: 40px; margin-top: 80px; border-top: 1px solid var(--border-color); font-size: 0.9em; }
+        footer a { color: var(--accent); text-decoration: none; }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="/jogos" class="logo-container">
+            <svg width="180" height="40" viewBox="0 0 180 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g transform="translate(0, 2)">
+                    <path d="M4 14L18 8L32 14L18 20L4 14Z" fill="#1e293b" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
+                    <path d="M4 14V26L18 32V20L4 14Z" fill="#0f172a" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
+                    <path d="M32 14V26L18 32V20L32 14Z" fill="#334155" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
+                    <path d="M12 12C12 9 24 9 24 12C24 14 20 16 18 16C16 16 12 14 12 12Z" fill="#38bdf8" stroke="#ffffff" stroke-width="1.5"/>
+                    <circle cx="15" cy="12" r="1" fill="#ffffff"/>
+                    <circle cx="21" cy="12" r="1" fill="#ffffff"/>
+                </g>
+                <line x1="42" y1="8" x2="42" y2="32" stroke="#ffffff" stroke-opacity="0.3" stroke-width="1.5"/>
+                <text x="52" y="25" fill="#ffffff" font-family="'Segoe UI', sans-serif" font-size="16" font-weight="700">Game<tspan font-weight="300" fill="#38bdf8">Compass</tspan></text>
+            </svg>
+        </a>
+        <div class="nav-links">
+            <a href="/jogos">Explorar</a>
+            <span class="nav-badge">Feito para jogar devagar ↗</span>
+        </div>
+    </header>
+
+    <div class="container">
+        <a class="back-link" href="/jogos">&larr; Voltar para o Catálogo</a>
+
+        <!-- Game Base Details View -->
+        <div class="base-game-card" th:if="${jogoBase != null}">
+            <img class="base-game-img" th:src="${jogoBase.capa}" th:alt="${jogoBase.nome}" onerror="this.src='https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&auto=format&fit=crop&q=80'">
+            <div class="base-game-info">
+                <h2 th:text="${jogoBase.nome}">Nome do Jogo</h2>
+                <div class="dev" th:text="'Desenvolvedor: ' + ${jogoBase.desenvolvedor}">Desenvolvedor</div>
+                <div class="genres">
+                    <span class="badge" th:each="g : ${jogoBase.generos}" th:text="${g}">Gênero</span>
+                </div>
+                <p class="desc" th:text="${jogoBase.descricao}">Descrição detalhada do jogo...</p>
+                <div class="launch-date" th:if="${jogoBase.dataLancamento != null}" th:text="'Data de Lançamento: ' + ${#temporals.format(jogoBase.dataLancamento, 'dd/MM/yyyy')}">Lançamento</div>
+            </div>
+        </div>
+
+        <h3 class="section-title">&#128293; Jogos Recomendados (Top 4 por Similaridade)</h3>
+
+        <!-- Top 4 Recommended Games showing just cover and name -->
+        <div class="rec-grid" th:if="${recomendacoes != null and !recomendacoes.isEmpty()}">
+            <a class="rec-card" th:each="rec, stat : ${recomendacoes}" th:if="${stat.index < 4}" th:href="@{/jogos/{index}/recomendacoes(index=${rec.indice})}">
+                <div class="rec-img-container">
+                    <img th:src="${rec.jogo.capa}" th:alt="${rec.jogo.nome}" onerror="this.src='https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&auto=format&fit=crop&q=80'">
+                </div>
+                <div class="rec-content">
+                    <h4 th:text="${rec.jogo.nome}">Nome do Jogo Recomendado</h4>
+                    <div>
+                        <span class="similarity-badge" th:text="'Similaridade: ' + ${rec.pontuacao} + ' pts'">Pontuação: 10</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <p th:if="${recomendacoes == null or recomendacoes.isEmpty()}" style="color: #64748b; font-size: 1.1em; text-align: center; padding: 60px;">Nenhuma recomendação encontrada para este jogo.</p>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 GameCompass. Desenvolvido com paixão pela Equipe do Projeto Integrador / Estrutura de Dados.</p>
+    </footer>
+</body>
+</html>
