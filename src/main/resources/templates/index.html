@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <!-- Metadados básicos e carregamento do CSS compartilhado pelas páginas. -->
     <meta charset="UTF-8">
     <title>GameCompass</title>
     <link rel="stylesheet" th:href="@{/css/gamecompass.css}">
 </head>
 <body>
+<!-- Cabeçalho fixo com navegação principal e identidade visual. -->
 <header>
     <a href="/jogos" class="logo-container">
         <svg width="180" height="40" viewBox="0 0 180 40" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -27,14 +29,17 @@
     </div>
 </header>
 
+<!-- Área de apresentação do propósito do catálogo. -->
 <div class="hero">
     <span class="hero-tag">Catálogo Inteligente & Grafo de Similaridade</span>
     <h1>Qual o próximo jogo?</h1>
     <p>Um espaço para revisitar clássicos e descobrir o próximo mundo onde você vai se aventurar, explorar e <sobreviver></sobreviver>.</p>
 </div>
 
+<!-- Catálogo de jogos e notas explicativas sobre o algoritmo. -->
 <div class="main-layout">
     <div class="catalog-section">
+        <!-- Cada card é preenchido por um jogo recebido do controller. -->
         <div class="card" th:each="jogo, stat : ${jogos}">
             <div class="card-img-container">
                 <img th:src="${jogo.capa}" th:alt="${jogo.nome}" onerror="this.src='https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&auto=format&fit=crop&q=80'">
@@ -57,6 +62,7 @@
     </div>
 
     <div class="sidebar">
+        <!-- Textos auxiliares que explicam a ideia de similaridade e grafos. -->
         <div class="field-note">
             <div class="field-note-title">Nota de Campo / 07</div>
             <p>"A similaridade entre mundos virtuais não reside apenas em suas mecânicas visíveis, mas nas conexões invisíveis de suas estruturas de dados. Cada recomendação é um novo caminho traçado no grafo."</p>
@@ -68,6 +74,7 @@
     </div>
 </div>
 
+<!-- Rodapé comum da aplicação. -->
 <footer>
     <p>&copy; 2026 GameCompass. Desenvolvido por Luiz Felipe e Luciano Junior.</p>
 </footer>

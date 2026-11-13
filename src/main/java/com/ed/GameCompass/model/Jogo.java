@@ -2,6 +2,9 @@ package com.ed.GameCompass.model;
 
 import java.time.LocalDate;
 
+//Representa um jogo exibido no catálogo.
+//Além dos dados descritivos, a classe armazena os gêneros usados no cálculo
+//das recomendações e a data opcional de lançamento.
 public class Jogo {
 
     private String nome;
@@ -11,10 +14,12 @@ public class Jogo {
     private String[] generos;
     private String desenvolvedor;
 
+    //Cria um jogo sem data de lançamento informada.
     public Jogo(String nome, String capa, String descricao, String[] generos, String desenvolvedor) {
         this(nome, capa, descricao, null, generos, desenvolvedor);
     }
 
+    //Cria um jogo com todos os dados apresentados no catálogo.
     public Jogo(String nome, String capa, String descricao, LocalDate dataLancamento,
                 String[] generos, String desenvolvedor) {
         this.nome = nome;
@@ -25,6 +30,8 @@ public class Jogo {
         this.desenvolvedor = desenvolvedor;
     }
 
+    // Getters e setters permitem que o Thymeleaf leia e, quando necessário,
+    // atualize os dados do modelo por meio das propriedades JavaBean.
     public String getNome() {
         return nome;
     }

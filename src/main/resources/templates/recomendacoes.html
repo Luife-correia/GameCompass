@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <!-- Metadados da página de recomendações e CSS compartilhado. -->
     <meta charset="UTF-8">
     <title>GameCompass — Recomendações</title>
     <link rel="stylesheet" th:href="@{/css/gamecompass.css}">
 </head>
 <body>
+<!-- Cabeçalho mantém a navegação disponível durante a consulta. -->
 <header>
     <a href="/jogos" class="logo-container">
         <svg width="180" height="40" viewBox="0 0 180 40" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -28,9 +30,10 @@
 </header>
 
 <div class="container">
+    <!-- Retorna o usuário ao catálogo completo. -->
     <a class="back-link" href="/jogos">&larr; Voltar para o Catálogo</a>
 
-    <!-- Game Base Details View -->
+    <!-- Exibe os detalhes do jogo usado como base para a recomendação. -->
     <div class="base-game-card" th:if="${jogoBase != null}">
         <img class="base-game-img" th:src="${jogoBase.capa}" th:alt="${jogoBase.nome}" onerror="this.src='https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&auto=format&fit=crop&q=80'">
         <div class="base-game-info">
@@ -46,7 +49,7 @@
 
     <h3 class="section-title">Jogos Recomendados</h3>
 
-    <!-- Top 4 Recommended Games showing just cover and name -->
+    <!-- Mostra no máximo quatro recomendações, ordenadas por similaridade. -->
     <div class="rec-grid" th:if="${recomendacoes != null and !recomendacoes.isEmpty()}">
         <a class="rec-card" th:each="rec, stat : ${recomendacoes}" th:if="${stat.index < 4}" th:href="@{/jogos/{index}/recomendacoes(index=${rec.indice})}">
             <div class="rec-img-container">
@@ -64,6 +67,7 @@
     <p class="empty-state" th:if="${recomendacoes == null or recomendacoes.isEmpty()}">Nenhuma recomendação encontrada para este jogo.</p>
 </div>
 
+<!-- Rodapé comum da aplicação. -->
 <footer>
     <p>&copy; 2026 GameCompass. Desenvolvido por Luiz Felipe e Luciano Junior.</p>
 </footer>

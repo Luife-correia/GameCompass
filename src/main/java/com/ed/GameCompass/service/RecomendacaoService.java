@@ -13,8 +13,12 @@ import java.util.Comparator;
 import java.util.List;
 
 @Service
+//Centraliza o catálogo e a lógica de recomendação do GameCompass.
+//Cada jogo é representado por um vértice, e cada relação de similaridade
+//entre dois jogos é representada por uma aresta ponderada.
 public class RecomendacaoService {
 
+    // Catálogo imutável usado tanto pela tela quanto pelo grafo de similaridade.
     private final List<Jogo> catalogo = List.of(
             new Jogo("The Witcher 3", "https://cdn.cloudflare.steamstatic.com/steam/apps/292030/library_600x900.jpg", "The Witcher 3: Wild Hunt — Remastered moderniza o aclamado jogo de RPG com uma série de novidades e melhorias. Torne-se o caçador de monstros de aluguel Geralt de Rívia e viaje por um vasto mundo aberto de fantasia sombria em uma missão épica para encontrar sua filha adotiva, Ciri.", LocalDate.of(2015, 5, 18), new String[]{"RPG", "Acao", "Aventura", "Fantasia Sombria", "Mundo Aberto", "Narrativa", "Escolhas"}, "CD Projekt Red"),
             new Jogo("Cyberpunk 2077", "https://cdn.cloudflare.steamstatic.com/steam/apps/1091500/library_600x900.jpg", "Cyberpunk 2077 é um RPG de ação e aventura em mundo aberto que se passa em Night City, uma megalópole perigosa onde todos são obcecados por poder, glamour e alterações corporais.", LocalDate.of(2020, 12, 10), new String[]{"RPG", "Acao", "Mundo Aberto", "Cyberpunk", "Tiro", "Narrativa", "Escolhas"}, "CD Projekt Red"),
@@ -42,23 +46,27 @@ public class RecomendacaoService {
             new Jogo("Celeste", "https://cdn.cloudflare.steamstatic.com/steam/apps/504230/library_600x900.jpg", "Ajude Madeline a enfrentar seus demônios internos em sua jornada até o topo da Montanha Celeste, nesse jogo de plataforma super afiado dos criadores de TowerFall. Desbrave centenas de desafios meticulosos, descubra segredos complicados e desvende o mistério da montanha.\n", LocalDate.of(2018, 1, 25), new String[]{"Plataforma", "Aventura", "Indie"}, "Maddy Makes Games")
     );
 
+    // Grafo construído uma vez durante a criação do service.
     private final Grafo<Jogo> grafo = new Grafo<>();
 
+    //Monta o grafo de recomendações assim que o service é criado.
     public RecomendacaoService() {
         construirGrafo();
     }
 
+    //Retorna os jogos disponíveis para consulta.
     public List<Jogo> getCatalogo() {
         return catalogo;
     }
 
+    //Cria os vértices e as arestas ponderadas do grafo.
     private void construirGrafo() {
-        // Cada jogo vira um vértice do grafo.
+        //Cada jogo vira um vértice do grafo.
         for (Jogo jogo : catalogo) {
             grafo.adicionarVertice(jogo);
         }
 
-        // A relação é criada nos dois sentidos para o grafo ser não direcionado.
+        //A relação é criada nos dois sentidos para o grafo ser não direcionado.
         for (int i = 0; i < catalogo.size(); i++) {
             for (int j = i + 1; j < catalogo.size(); j++) {
                 Jogo jogoAtual = catalogo.get(i);
@@ -73,6 +81,9 @@ public class RecomendacaoService {
         }
     }
 
+     //Calcula a pontuação de similaridade entre dois jogos.
+     //Cada gênero compartilhado soma um ponto; o mesmo desenvolvedor soma
+     //três pontos adicionais, valorizando relações de catálogo e estúdio.
     public int calcularSimilaridade(Jogo jogoBase, Jogo jogoCandidato) {
         int pontuacao = 0;
 
@@ -92,6 +103,7 @@ public class RecomendacaoService {
         return pontuacao;
     }
 
+    //Obtém os vizinhos do jogo base e os ordena da maior para a menor pontuação.
     public List<Recomendacao> ordenarPorSimilaridade(Jogo jogoBase){
 
         ArrayList<Recomendacao> recomendacoes = new ArrayList<>();

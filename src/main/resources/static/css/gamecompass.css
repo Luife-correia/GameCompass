@@ -1,3 +1,4 @@
+/* Variáveis de cor e borda usadas para manter a identidade visual consistente. */
 :root {
     --bg-obsidian: #080808;
     --bg-card: #171010;
@@ -9,9 +10,11 @@
     --border-color: rgba(255, 255, 255, 0.08);
 }
 
+/* Normalização global e aparência base da página. */
 * { box-sizing: border-box; }
 body { font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif; background-color: var(--bg-obsidian); margin: 0; padding: 0; color: var(--text-main); }
 
+/* Cabeçalho, logo e elementos de navegação. */
 header { background-color: var(--bg-header); padding: 18px 48px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 100; backdrop-filter: blur(12px); }
 .logo-container { display: flex; align-items: center; text-decoration: none; }
 
@@ -20,12 +23,14 @@ header { background-color: var(--bg-header); padding: 18px 48px; display: flex; 
 .nav-links a:hover { color: var(--accent); }
 .nav-badge { background: rgba(239, 68, 68, 0.1); color: var(--accent); padding: 6px 14px; border-radius: 20px; border: 1px solid rgba(239, 68, 68, 0.3); font-size: 0.85em; }
 
+/* Seção de destaque exibida no topo do catálogo. */
 .hero { position: relative; padding: 70px 20px; background: linear-gradient(180deg, #100808 0%, #080808 100%); border-bottom: 1px solid var(--border-color); text-align: center; overflow: hidden; }
 .hero::before { content: ''; position: absolute; top: -50px; left: 50%; transform: translateX(-50%); width: 600px; height: 200px; background: radial-gradient(circle, rgba(239, 68, 68, 0.15) 0%, rgba(8, 8, 8, 0) 70%); pointer-events: none; }
 .hero-tag { display: inline-block; color: var(--accent); font-size: 0.85em; text-transform: uppercase; letter-spacing: 2px; font-weight: 600; margin-bottom: 12px; }
 .hero h1 { color: var(--text-white); margin: 0 0 15px 0; font-size: 3em; font-weight: 800; letter-spacing: -0.5px; }
 .hero p { color: var(--text-main); font-size: 1.15em; max-width: 680px; margin: 0 auto; line-height: 1.6; }
 
+/* Grid principal, cards de jogos e regras de responsividade do catálogo. */
 .main-layout { max-width: 1400px; margin: 40px auto; padding: 0 30px; display: grid; grid-template-columns: 1fr 320px; gap: 40px; }
 @media (max-width: 1100px) { .main-layout { grid-template-columns: 1fr; } }
 .catalog-section { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 24px; }
@@ -45,12 +50,14 @@ header { background-color: var(--bg-header); padding: 18px 48px; display: flex; 
 .btn { display: block; text-align: center; background: linear-gradient(135deg, #991b1b 0%, #ef4444 100%); color: var(--text-white); padding: 11px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9em; transition: opacity 0.2s, box-shadow 0.2s; box-shadow: 0 4px 12px rgba(153, 27, 27, 0.3); }
 .btn:hover { opacity: 0.92; box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4); }
 
+/* Painel lateral com as notas explicativas sobre o grafo. */
 .sidebar { display: flex; flex-direction: column; gap: 24px; }
 .field-note { border-radius: 12px; padding: 24px; position: relative; }
 .field-note::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--accent); border-top-left-radius: 12px; border-bottom-left-radius: 12px; }
 .field-note-title { font-size: 0.8em; text-transform: uppercase; letter-spacing: 1.5px; color: var(--accent); font-weight: 700; margin-bottom: 12px; }
 .field-note p { font-size: 0.95em; color: var(--text-main); line-height: 1.7; margin: 0; font-style: italic; }
 
+/* Layout da página de detalhes e do jogo escolhido como base. */
 .container { max-width: 1200px; margin: 40px auto; padding: 0 24px; }
 .back-link { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 30px; color: var(--accent); text-decoration: none; font-weight: 600; font-size: 1em; transition: color 0.2s; }
 .back-link:hover { color: var(--text-white); }
@@ -65,6 +72,8 @@ header { background-color: var(--bg-header); padding: 18px 48px; display: flex; 
 .base-game-info .desc { font-size: 1.05em; line-height: 1.7; margin-bottom: 24px; display: block; -webkit-line-clamp: unset; overflow: visible; }
 .launch-date { font-size: 0.9em; color: var(--accent); font-weight: 600; }
 .section-title { color: var(--text-white); font-size: 1.6em; margin-bottom: 25px; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; display: flex; align-items: center; gap: 10px; font-weight: 700; }
+
+/* Cards compactos que apresentam os jogos recomendados. */
 .rec-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 24px; margin-bottom: 50px; }
 .rec-card { border-radius: 12px; overflow: hidden; text-decoration: none; color: inherit; box-shadow: 0 10px 25px rgba(0,0,0,0.4); display: flex; flex-direction: column; transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s, border-color 0.3s; }
 .rec-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px var(--accent-glow); border-color: rgba(239, 68, 68, 0.4); }
@@ -79,5 +88,6 @@ header { background-color: var(--bg-header); padding: 18px 48px; display: flex; 
 .graph-note { border-left-color: var(--accent); }
 .graph-note .field-note-title { color: var(--accent); }
 
+/* Rodapé compartilhado pelas telas da aplicação. */
 footer { background-color: var(--bg-header); color: #806b6b; text-align: center; padding: 40px; margin-top: 80px; border-top: 1px solid var(--border-color); font-size: 0.9em; }
 footer a { color: var(--accent); text-decoration: none; }

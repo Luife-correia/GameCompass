@@ -1,5 +1,11 @@
 package com.ed.GameCompass.grafo;
 
+/**
+ * Representa uma conexão ponderada entre dois vértices.
+ *
+ * Inicio e fim permitem navegar pela relação, enquanto o peso representa a
+ * intensidade da similaridade entre os jogos.
+ */
 public class Aresta<TIPO> {
 
     private Double peso;
@@ -8,6 +14,7 @@ public class Aresta<TIPO> {
 
     private Vertice<TIPO> fim;
 
+    //Cria uma aresta com peso, vértice de origem e vértice de destino.
     public Aresta (Double peso, Vertice<TIPO> inicio, Vertice<TIPO> fim) {
         this.peso = peso;
         this.inicio = inicio;
@@ -15,6 +22,7 @@ public class Aresta<TIPO> {
     }
 
 
+    // Getters e setters mantêm os dados da relação acessíveis ao algoritmo.
     public Double getPeso () {
         return peso;
     }
