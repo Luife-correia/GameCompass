@@ -1,6 +1,6 @@
 # Documentação Detalhada do GameCompass
 
-Esta documentação explica detalhadamente o funcionamento de cada classe do projeto **GameCompass**, linha por linha (excluindo apenas o pacote `model`), bem como a comunicação entre o Front-End (HTML/Thymeleaf) e o Controller (Spring Boot).
+Esta documentação explica o funcionamento das classes, templates e recursos principais do projeto **GameCompass**, bem como a comunicação entre o Front-End (HTML/Thymeleaf) e o Controller (Spring Boot).
 
 ---
 
@@ -11,15 +11,18 @@ Esta documentação explica detalhadamente o funcionamento de cada classe do pro
 4. [Estrutura de Dados (Grafos): `Aresta.java`, `Vertice.java`, `Grafo.java`](#3-estrutura-de-dados-grafos)
 5. [Camada de Serviço: `RecomendacaoService.java`](#4-recomendacaoservicejava)
 6. [Comunicação Front-End ⇄ Controller](#5-comunicação-front-end--controller)
+7. [Modelos da aplicação](#6-modelos-da-aplicação)
+8. [Templates e identidade visual](#7-templates-e-identidade-visual)
+9. [Configuração, execução e testes](#8-configuração-execução-e-testes)
 
 ---
 
 ## Visão Geral da Arquitetura
 
-O **GameCompass** é uma aplicação web desenvolvida em Java com **Spring Boot** e **Thymeleaf**. O objetivo do sistema é recomendar jogos com base em similaridade de gênero e desenvolvedora, utilizando uma estrutura de dados de **Grafo não direcionado**.
+O **GameCompass** é uma aplicação web desenvolvida em Java 17 com **Spring Boot 3.3.5** e **Thymeleaf**. O objetivo do sistema é recomendar jogos com base em similaridade de gênero e desenvolvedora, utilizando uma estrutura de dados de grafo.
 
 O projeto segue o padrão arquitetural **MVC (Model-View-Controller)** dividido em camadas:
-- **Model**: Dados da aplicação (`Jogo`, `Recomendacao`) *(excluído desta análise detalhada conforme solicitação)*.
+- **Model**: Dados da aplicação (`Jogo`, `Recomendacao`).
 - **Controller**: Gerencia as rotas HTTP e interage com os serviços.
 - **Service**: Contém a regra de negócio, o catálogo de jogos e a lógica do Grafo e de similaridade.
 - **Grafo (`grafo`)**: Implementação customizada de Estrutura de Dados (Grafo, Vértice e Aresta).
@@ -320,7 +323,7 @@ public class RecomendacaoService {
             grafo.adicionarVertice(jogo);
         }
 
-        // Passo 2: Compara cada par de jogos do catálogo para calcular a similaridade (grafo não direcionado).
+        // Passo 2: Compara cada par de jogos e cria relações nos dois sentidos.
         for (int i = 0; i < catalogo.size(); i++) {
             for (int j = i + 1; j < catalogo.size(); j++) {
                 Jogo jogoAtual = catalogo.get(i);
@@ -422,3 +425,114 @@ O projeto utiliza **Thymeleaf** como engine de templates no lado do servidor (Se
      </a>
      ```
    - O usuário recebe a página HTML completa e estilizada no navegador, podendo navegar recursivamente para recomendações de outros jogos.
+
+---
+
+## 6. Modelos da aplicação
+
+### 6.1 `Jogo.java`
+**Localização:** `src/main/java/com/ed/GameCompass/model/Jogo.java`
+
+Representa um jogo do catálogo. A classe armazena o nome, a URL da capa, a descrição, a data opcional de lançamento, os gêneros e o desenvolvedor.
+
+Os gêneros são usados pelo algoritmo de similaridade. A classe possui dois construtores: um com data de lançamento e outro sem data, que delega ao construtor completo usando `null`. Getters e setters permitem que o Thymeleaf acesse as propriedades por expressões como `${jogo.nome}`.
+
+### 6.2 `Recomendacao.java`
+**Localização:** `src/main/java/com/ed/GameCompass/model/Recomendacao.java`
+
+Representa o resultado de uma recomendação. Ela reúne o jogo recomendado, sua pontuação de similaridade e o índice do jogo no catálogo. Esse índice é usado para montar o link da próxima página de recomendações.
+
+---
+
+## 7. Templates e identidade visual
+
+### 7.1 `index.html`
+**Localização:** `src/main/resources/templates/index.html`
+
+É a página principal do catálogo. O controller fornece a lista no atributo `jogos`, e o Thymeleaf cria um card para cada item usando `th:each`.
+
+Cada card apresenta capa, nome, desenvolvedor, gêneros, descrição, data de lançamento e um link para `/jogos/{indice}/recomendacoes`. O cabeçalho contém a imagem local `gamecompass-logo.png`, um separador visual e o texto estilizado “GameCompass”.
+
+### 7.2 `recomendacoes.html`
+**Localização:** `src/main/resources/templates/recomendacoes.html`
+
+Exibe o jogo selecionado e, abaixo dele, até quatro recomendações. A lista recebida pelo atributo `recomendacoes` já chega ordenada pelo service; o template limita a exibição com `th:if="${stat.index < 4}"`.
+
+As imagens das capas usam `onerror` para apresentar uma imagem alternativa quando a URL original não carrega. O cabeçalho e o favicon utilizam o recurso local `/images/gamecompass-logo.png`.
+
+### 7.3 `gamecompass.css`
+**Localização:** `src/main/resources/static/css/gamecompass.css`
+
+É a folha de estilos própria da aplicação. O projeto não utiliza Bootstrap ou outro framework CSS. O arquivo define:
+
+- Variáveis de cores da identidade visual.
+- Cabeçalho, navegação e composição da logo.
+- Layout responsivo do catálogo.
+- Cards de jogos e recomendações.
+- Página de detalhes do jogo base.
+- Painéis laterais e rodapé.
+- Efeitos de hover, sombras, bordas e gradientes.
+
+### 7.4 Imagens e favicon
+**Localização:** `src/main/resources/static/images/gamecompass-logo.png`
+
+A imagem local é usada como marca no cabeçalho e como favicon nas duas páginas HTML. As capas dos jogos do catálogo são carregadas principalmente de URLs externas; por isso os templates possuem uma imagem de fallback para falhas de carregamento.
+
+---
+
+## 8. Configuração, execução e testes
+
+### 8.1 `pom.xml`
+**Localização:** `pom.xml`
+
+O projeto é gerenciado pelo Maven e usa:
+
+- Java 17 como versão configurada de compilação.
+- `spring-boot-starter-web` para o servidor web e MVC.
+- `spring-boot-starter-thymeleaf` para renderização dos templates.
+- `spring-boot-starter-test` para testes automatizados.
+- `spring-boot-maven-plugin` para empacotamento e execução da aplicação.
+
+### 8.2 Execução
+
+No Windows, o Maven Wrapper do projeto pode ser usado com:
+
+```powershell
+.\mvnw.cmd spring-boot:run
+```
+
+Depois, a aplicação fica disponível em `http://localhost:8080/`.
+
+As rotas principais são:
+
+| Método | Rota | Resultado |
+|---|---|---|
+| GET | `/` | Catálogo principal |
+| GET | `/jogos` | Catálogo principal |
+| GET | `/jogos/{indice}/recomendacoes` | Jogo base e recomendações |
+
+Índices inválidos na rota de recomendações retornam HTTP 404.
+
+### 8.3 Testes
+**Localização:** `src/test/java/com/ed/GameCompass/GameCompassApplicationTests.java`
+
+O teste anotado com `@SpringBootTest` verifica se o contexto da aplicação pode ser carregado corretamente, incluindo a configuração do Spring, o controller, o service e os templates necessários.
+
+Para executá-lo no Windows:
+
+```powershell
+.\mvnw.cmd test
+```
+
+### 8.4 Observações sobre o grafo
+
+O algoritmo compara cada par de jogos apenas uma vez. Quando a similaridade é maior que zero, o service adiciona duas arestas: uma do primeiro jogo para o segundo e outra no sentido inverso. Portanto, a classe `Grafo` armazena arestas direcionadas, mas o conjunto de relações usado pelo recomendador possui comportamento equivalente ao de um grafo não direcionado.
+
+O peso de cada aresta é calculado assim:
+
+```text
+pontuação = quantidade de gêneros compartilhados
+           + 3 pontos se os desenvolvedores forem iguais
+```
+
+As recomendações são ordenadas em ordem decrescente de pontuação, e o template exibe as quatro primeiras.
