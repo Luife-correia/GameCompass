@@ -16,8 +16,11 @@ body { font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif; b
 
 /* Cabeçalho, logo e elementos de navegação. */
 header { background-color: var(--bg-header); padding: 18px 48px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 100; backdrop-filter: blur(12px); }
-.logo-container { display: flex; align-items: center; text-decoration: none; }
-
+.logo-container { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.logo-mark { width: 5%; object-fit: contain; }
+.logo-divider { width: 1.5px; height: 24px; background-color: rgba(255, 255, 255, 0.3); }
+.logo-text { color: var(--text-white); font-size: 1.1em; font-weight: 700; white-space: nowrap; }
+.logo-text span { color: var(--accent); font-weight: 300; }
 .nav-links { display: flex; gap: 24px; align-items: center; font-size: 0.95em; font-weight: 500; }
 .nav-links a { color: var(--text-main); text-decoration: none; transition: color 0.2s; }
 .nav-links a:hover { color: var(--accent); }

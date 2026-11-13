@@ -5,23 +5,15 @@
     <meta charset="UTF-8">
     <title>GameCompass</title>
     <link rel="stylesheet" th:href="@{/css/gamecompass.css}">
+    <link rel="icon" type="image/gamecompass-logo.png" href="/images/gamecompass-logo.png">
 </head>
 <body>
 <!-- Cabeçalho fixo com navegação principal e identidade visual. -->
 <header>
     <a href="/jogos" class="logo-container">
-        <svg width="180" height="40" viewBox="0 0 180 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g transform="translate(0, 2)">
-                <path d="M4 14L18 8L32 14L18 20L4 14Z" fill="#3f1111" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
-                <path d="M4 14V26L18 32V20L4 14Z" fill="#1f0808" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
-                <path d="M32 14V26L18 32V20L32 14Z" fill="#641515" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
-                <path d="M12 12C12 9 24 9 24 12C24 14 20 16 18 16C16 16 12 14 12 12Z" fill="#ef4444" stroke="#ffffff" stroke-width="1.5"/>
-                <circle cx="15" cy="12" r="1" fill="#ffffff"/>
-                <circle cx="21" cy="12" r="1" fill="#ffffff"/>
-            </g>
-            <line x1="42" y1="8" x2="42" y2="32" stroke="#ffffff" stroke-opacity="0.3" stroke-width="1.5"/>
-            <text x="52" y="25" fill="#ffffff" font-family="'Segoe UI', sans-serif" font-size="16" font-weight="700">Game<tspan font-weight="300" fill="#ef4444">Compass</tspan></text>
-        </svg>
+        <img class="logo-mark" src="/images/gamecompass-logo.png" alt="Logo do GameCompass">
+        <span class="logo-divider"></span>
+        <span class="logo-text">Game<span>Compass</span></span>
     </a>
     <div class="nav-links">
         <a href="/jogos">Explorar</a>
